@@ -1,6 +1,5 @@
 package TubesMaintenanceTravel;
 
-
 public class StrukturList {
     private Node HEAD;
 
@@ -133,7 +132,25 @@ public class StrukturList {
         return false;
     }
 
+public void clear() {
+        while (HEAD != null) {
+            Node temp = HEAD;
+            HEAD = HEAD.getNext();
+            dispose(temp);
+        }
+        System.out.println("Semua data berhasil dihapus.");
+    }
 
+    private void dispose(Node node) {
+        node.setNext(null);
+        node = null; 
+    }
+
+    public void displayElement() {
+        if (HEAD == null) {
+            System.out.println("List kosong.");
+            return;
+        }
 
 
         
