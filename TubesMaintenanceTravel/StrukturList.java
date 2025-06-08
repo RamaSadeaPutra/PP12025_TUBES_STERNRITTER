@@ -109,6 +109,30 @@ public class StrukturList {
         }
     }
 
+     public int size() {
+        int count = 0;
+        Node curNode = HEAD;
+        while (curNode != null) {
+            count++;
+            curNode = curNode.getNext();
+        }
+        return count;
+    }
+
+
+    public boolean find(String noPol) {
+        Node curNode = HEAD;
+        while (curNode != null) {
+            if (curNode.getData().getNoPol().equalsIgnoreCase(noPol)) {
+                System.out.println("Data ditemukan:\n" + curNode.getData());
+                return true;
+            }
+            curNode = curNode.getNext();
+        }
+        System.out.println("Data dengan NoPol '" + noPol + "' tidak ditemukan.");
+        return false;
+    }
+
 
 
 
