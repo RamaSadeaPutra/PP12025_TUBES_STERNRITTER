@@ -167,6 +167,52 @@ public void clear() {
             System.err.println("Gagal menyimpan data: " + e.getMessage()); 
         }
     }
+
+    public void editInFile(String filename, String noPolTarget, Kendaraan dataBaru) {
+        File inputFile = new File(filename);
+        File tempFile = new File("temp_" + filename);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            boolean found = false;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";"); 
+                for (int i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].trim();
+                }
+
+                if (parts.length == 4 && parts[0].equalsIgnoreCase(noPolTarget)) {
+                    writer.write(dataBaru.getNoPol() + ";" + dataBaru.getSopir() + ";" +
+                                 dataBaru.getTanggal() + ";" + dataBaru.getKeterangan());
+                    found = true;
+                } else {
+                    writer.write(line);
+                }
+                writer.newLine();
+            }
+
+            if (!found) {
+                System.out.println("Data dengan NoPol " + noPolTarget + " tidak ditemukan di file.");
+            } else {
+                System.out.println("Data berhasil diubah.");
+            }
+
+        } catch (IOException e) {
+            System.err.println("Gagal mengedit file: " + e.getMessage()); 
+            return;
+        }
+
+        if (inputFile.delete()) {
+            if (!tempFile.renameTo(inputFile)) {
+                System.err.println("Gagal mengganti file lama dengan file baru."); 
+            }
+        } else {
+            System.err.println("Gagal menghapus file lama."); 
+        }
+    }
         
     }
 
