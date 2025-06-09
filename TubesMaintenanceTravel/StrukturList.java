@@ -151,8 +151,22 @@ public void clear() {
             System.out.println("List kosong.");
             return;
         }
-
-
+        
+    public void saveToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            Node curNode = HEAD;
+            while (curNode != null) {
+                Kendaraan k = curNode.getData();
+                writer.write(k.getNoPol() + ";" + k.getSopir() + ";" +
+                             k.getTanggal() + ";" + k.getKeterangan());
+                writer.newLine();
+                curNode = curNode.getNext();
+            }
+            System.out.println("Data berhasil disimpan ke file: " + filename);
+        } catch (IOException e) {
+            System.err.println("Gagal menyimpan data: " + e.getMessage()); 
+        }
+    }
         
     }
 
